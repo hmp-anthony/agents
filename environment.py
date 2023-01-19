@@ -111,7 +111,15 @@ class TrivialVacuumEnvironment(Environment):
         return agent.location, self.status[agent.location]
 
     def execute_action(self, agent, action):
-        print(action)
+        if(action == 'Right'):
+            agent.location = (1, 0)
+        if(action == 'Left'):
+            agent.location = (0, 0)
+        if(action == 'Suck'):
+            self.status[agent.location] = 'Clean'
+
+    def show_status(self):
+        print(self.status)
 
     def thing_classes(self):
         return [Dirt, ReflexVacuumAgent]
@@ -125,6 +133,10 @@ env = TrivialVacuumEnvironment()
 agnt = ReflexVacuumAgent()
 # add agent to environment
 env.add_thing(agnt, location=loc_A)
+env.show_status()
+print(agnt.location)
 # step forward
 env.step() 
+env.show_status()
+print(agnt.location)
 
