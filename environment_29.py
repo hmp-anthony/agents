@@ -83,6 +83,7 @@ class Environment:
                     actions.append("")
             for (agent, action) in zip(self.agents, actions):
                 self.execute_action(agent, action)
+        
 
     def add_thing(self, thing, location=None):
         if not isinstance(thing, Thing):
@@ -107,9 +108,11 @@ class TrivialVacuumEnvironment(Environment):
         self.status = {loc_A: random.choice(['Clean', 'Dirty']),
                        loc_B: random.choice(['Clean', 'Dirty'])}
 
+    """ perceptions from percepts. """
     def percept(self, agent):
         return agent.location, self.status[agent.location]
 
+    """ actions from actuators.  """
     def execute_action(self, agent, action):
         if(action == 'Right'):
             agent.location = (1, 0)
@@ -135,8 +138,15 @@ agnt = ReflexVacuumAgent()
 env.add_thing(agnt, location=loc_A)
 env.show_status()
 print(agnt.location)
-# step forward
+# step forward and show status
 env.step() 
 env.show_status()
 print(agnt.location)
-
+# ...and again
+env.step() 
+env.show_status()
+print(agnt.location)
+# ...and again
+env.step() 
+env.show_status()
+print(agnt.location)
