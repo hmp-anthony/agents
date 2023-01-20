@@ -107,6 +107,7 @@ class TrivialVacuumEnvironment(Environment):
         super().__init__()
         self.status = {loc_A: random.choice(['Clean', 'Dirty']),
                        loc_B: random.choice(['Clean', 'Dirty'])}
+        self.score = 0
 
     """ perceptions from percepts. """
     def percept(self, agent):
@@ -114,10 +115,19 @@ class TrivialVacuumEnvironment(Environment):
 
     """ actions from actuators.  """
     def execute_action(self, agent, action):
+        # score a point for each clean square 
+        if self.status[loc_A] == 'Clean':
+            score += 1
+        if self.status[loc_B] == 'Clean':
+            score += 1
+
+        # lose a point for moving
         if(action == 'Right'):
             agent.location = (1, 0)
+            score -= 1
         if(action == 'Left'):
             agent.location = (0, 0)
+            score -= 1
         if(action == 'Suck'):
             self.status[agent.location] = 'Clean'
 
