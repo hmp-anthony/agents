@@ -236,6 +236,13 @@ class XYEnvironment(e.Environment):
         return turn_heading(heading, inc)
 
 
+def XYAgent():
+    def program(percept):
+        status, bump = percept
+        if status == 'Dirty':
+            return 'Suck'
+
+    
 class VacuumEnvironment(XYEnvironment):
     """The environment of [Ex. 2.12]. Agent perceives dirty or clean,
     and bump (into obstacle) or not; 2D discrete world of unknown size;
@@ -252,8 +259,7 @@ class VacuumEnvironment(XYEnvironment):
     def percept(self, agent):
         """The percept is a tuple of ('Dirty' or 'Clean', 'Bump' or 'None').
         Unlike the TrivialVacuumEnvironment, location is NOT perceived."""
-        status = ('Dirty' if self.some_things_at(
-            agent.location, Dirt) else 'Clean')
+        status = ('Dirty' if self.some_things_at(agent.location, Dirt) else 'Clean')
         bump = ('Bump' if agent.bump else 'None')
         return status, bump
 
@@ -270,3 +276,8 @@ class VacuumEnvironment(XYEnvironment):
 
         if action != 'NoOp':
             agent.performance -= 1
+
+
+venv = VacuumEnvironment()
+agnt = XYAgent()
+venv.add_thing(agnt)

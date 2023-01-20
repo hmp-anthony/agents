@@ -25,12 +25,10 @@ class TrivialVacuumEnvironment(e.Environment):
         self.score = 0
 
     """ perceptions from percepts. """
-
     def percept(self, agent):
         return agent.location, self.status[agent.location]
 
     """ actions from actuators.  """
-
     def execute_action(self, agent, action):
         # score a point for each clean square
         if self.status[loc_A] == 'Clean':

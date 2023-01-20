@@ -1,7 +1,6 @@
 import collections
 import collections.abc
-
-
+import numbers
 
 class Thing:
     def __repr__(self):
@@ -86,3 +85,15 @@ class Environment:
                 thing.performance = 0
                 self.agents.append(thing)
 
+    
+    def some_things_at(self, location, tclass=Thing):
+        """Return true if at least one of the things at location
+        is an instance of class tclass (or a subclass)."""
+        return self.list_things_at(location, tclass) != []
+
+    def list_things_at(self, location, tclass=Thing):
+        """Return all things exactly at a given location."""
+        if isinstance(location, numbers.Number):
+            return [thing for thing in self.things if thing.location == location and isinstance(thing, tclass)]
+        return [thing for thing in self.things
+                if all(x == y for x, y in zip(thing.location, location)) and isinstance(thing, tclass)]
